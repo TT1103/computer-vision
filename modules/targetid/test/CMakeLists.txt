@@ -3,7 +3,7 @@ enable_testing()
 if(Boost_FOUND AND OpenCV_FOUND)
     ADD_DEFINITIONS("-DBOOST_LOG_DYN_LINK")
     add_executable(targetid_test_contour test.cpp)
-    target_link_libraries(targetid_test_contour ${OpenCV_LIBS} ${Boost_LIBRARIES} Core TargetIdentification)
+    target_link_libraries(targetid_test_contour ${OpenCV_LIBS} ${Boost_LIBRARIES} ${EXIV2_LIBRARIES} Core TargetIdentification)
 
     # Tests
     add_test(

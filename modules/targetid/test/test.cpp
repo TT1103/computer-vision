@@ -38,6 +38,7 @@
 #include <cmath>
 #include <iostream>
 #include <climits>
+#include <exiv2/exiv2.hpp>
 #include "target_identifier.h"
 #include "canny_contour_creator.h"
 #include "k_means_filter.h"
@@ -136,6 +137,19 @@ int main(int argc, char ** argv) {
         ss >> x >> y;
         contour->push_back(Point(x,y));
     }
+    
+
+    /************************************************ERIC's SHIT*/	
+    Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(argv[2]);
+    image->readMetadata();
+    Exiv2::ExifData &exifData = image->exifData();
+  
+    exifData["Exif.Photo.UserComment"] = "charset=\"Unicode\" An Unicode Exif comment added with Exiv2";
+    image->writeMetadata();
+    std::cout << "wrote it";
+
+    /****************************************************/
+   
     BOOST_LOG_TRIVIAL(info) << "Read Contour: " << contour; // TODO: figure out why defining operator<< doesn't affect boost logs
     Frame f(&input, "blah", Metadata());
     TargetTest test("Target Identification using KMeans + Canny");

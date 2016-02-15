@@ -4,14 +4,19 @@ project(warg-cv CXX)
 
 set(MODULES core csvcreator targetanalysis targetid volumecalc reportgen imgimport gmapsmatcher)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 # Dependencies
 find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED filesystem log thread system program_options)
+find_package(Exiv2 REQUIRED)
 
 message(status " Boost Include: ${Boost_INCLUDE_DIR}")
 message(status " Boost Libraries: ${Boost_LIBRARIES}")
 message(status " OpenCV Include: ${OpenCV_INCLUDE_DIRS}")
 message(status " OpenCV Libraries: ${OpenCV_LIBS}")
+message(status " Exiv2 Include: ${EXIV2_INCLUDE_DIR}")
+message(status " Exiv2 Libraries: ${EXIV2_LIBRARIES}")
 
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
@@ -42,6 +47,8 @@ if(Boost_FOUND AND OpenCV_FOUND)
     ADD_DEFINITIONS("-DBOOST_LOG_DYN_LINK")
     include_directories(${Boost_INCLUDE_DIRS})
     include_directories(${OpenCV_INCLUDE_DIRS})
+    include_directories(${EXIV2_INCLUDE_DIR})
+
     add_executable(warg-cv main.cpp)
-    target_link_libraries(warg-cv ${OpenCV_LIBS} ${Boost_LIBRARIES} Core ReportGenerator CSVCreator TargetAnalysis TargetIdentification VolumeCalculation ImageImport GoogleMapsMatcher)
+    target_link_libraries(warg-cv ${OpenCV_LIBS} ${Boost_LIBRARIES} ${EXIV2_LIBRARIES} Core ReportGenerator CSVCreator TargetAnalysis TargetIdentification VolumeCalculation ImageImport GoogleMapsMatcher)
 endif()
