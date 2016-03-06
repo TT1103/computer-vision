@@ -144,7 +144,7 @@ int main(int argc, char ** argv) {
     image->readMetadata();
     Exiv2::ExifData &exifData = image->exifData();
   
-    exifData["Exif.Photo.UserComment"] = "charset=\"Unicode\" An Unicode Exif comment added with Exiv2";
+    exifData["Exif.Photo.UserComment"] = "50,-90,90,180,1:23:45";
     image->writeMetadata();
     std::cout << "wrote it";
 
